@@ -10,6 +10,7 @@ VL_ATTR_COLD void Vblink_led___024root___eval_static(Vblink_led___024root* vlSel
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.__Vtrigprevexpr___TOP__clk__0 = vlSelfRef.clk;
+    vlSelfRef.__Vtrigprevexpr___TOP__reset__0 = vlSelfRef.reset;
 }
 
 VL_ATTR_COLD void Vblink_led___024root___eval_initial(Vblink_led___024root* vlSelf) {
@@ -43,7 +44,7 @@ VL_ATTR_COLD void Vblink_led___024root___eval_settle(Vblink_led___024root* vlSel
 #ifdef VL_DEBUG
             Vblink_led___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("blink_led.sv", 1, "", "DIDNOTCONVERGE: Settle region did not converge after '--converge-limit' of 100 tries");
+            VL_FATAL_MT("blink_led.v", 1, "", "DIDNOTCONVERGE: Settle region did not converge after '--converge-limit' of 100 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
         vlSelfRef.__VstlPhaseResult = Vblink_led___024root___eval_phase__stl(vlSelf);
@@ -142,6 +143,9 @@ VL_ATTR_COLD void Vblink_led___024root___dump_triggers__act(const VlUnpacked<QDa
     if ((1U & (IData)(triggers[0U]))) {
         VL_DBG_MSGS("         '" + tag + "' region trigger index 0 is active: @(posedge clk)\n");
     }
+    if ((1U & (IData)((triggers[0U] >> 1U)))) {
+        VL_DBG_MSGS("         '" + tag + "' region trigger index 1 is active: @(posedge reset)\n");
+    }
 }
 #endif  // VL_DEBUG
 
@@ -152,6 +156,7 @@ VL_ATTR_COLD void Vblink_led___024root___ctor_var_reset(Vblink_led___024root* vl
     // Body
     const uint64_t __VscopeHash = VL_MURMUR64_HASH(vlSelf->vlNamep);
     vlSelf->clk = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 16707436170211756652ull);
+    vlSelf->reset = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9928399931838511862ull);
     vlSelf->led = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 14009161575225144129ull);
     vlSelf->blink_led__DOT__counter = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17128979275709697837ull);
     vlSelf->blink_led__DOT__s = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 12634488857896582343ull);
@@ -162,6 +167,7 @@ VL_ATTR_COLD void Vblink_led___024root___ctor_var_reset(Vblink_led___024root* vl
         vlSelf->__VactTriggered[__Vi0] = 0;
     }
     vlSelf->__Vtrigprevexpr___TOP__clk__0 = 0;
+    vlSelf->__Vtrigprevexpr___TOP__reset__0 = 0;
     for (int __Vi0 = 0; __Vi0 < 1; ++__Vi0) {
         vlSelf->__VnbaTriggered[__Vi0] = 0;
     }

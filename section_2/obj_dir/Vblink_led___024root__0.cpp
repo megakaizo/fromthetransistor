@@ -10,9 +10,13 @@ void Vblink_led___024root___eval_triggers_vec__act(Vblink_led___024root* vlSelf)
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Body
     vlSelfRef.__VactTriggered[0U] = (QData)((IData)(
-                                                    ((IData)(vlSelfRef.clk) 
-                                                     & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__clk__0)))));
+                                                    ((((IData)(vlSelfRef.reset) 
+                                                       & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__reset__0))) 
+                                                      << 1U) 
+                                                     | ((IData)(vlSelfRef.clk) 
+                                                        & (~ (IData)(vlSelfRef.__Vtrigprevexpr___TOP__clk__0))))));
     vlSelfRef.__Vtrigprevexpr___TOP__clk__0 = vlSelfRef.clk;
+    vlSelfRef.__Vtrigprevexpr___TOP__reset__0 = vlSelfRef.reset;
 }
 
 bool Vblink_led___024root___trigger_anySet__act(const VlUnpacked<QData/*63:0*/, 1> &in) {
@@ -35,20 +39,28 @@ void Vblink_led___024root___nba_sequent__TOP__0(Vblink_led___024root* vlSelf) {
     Vblink_led__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
+    IData/*31:0*/ __Vdly__blink_led__DOT__counter;
+    __Vdly__blink_led__DOT__counter = 0;
     CData/*0:0*/ __Vdly__led;
     __Vdly__led = 0;
     // Body
     __Vdly__led = vlSelfRef.led;
-    __Vdly__led = (1U & ((0x00989680U <= vlSelfRef.blink_led__DOT__counter)
-                          ? (~ (IData)(vlSelfRef.led))
-                          : (IData)(vlSelfRef.led)));
-    if (VL_UNLIKELY(((0x00989680U <= vlSelfRef.blink_led__DOT__counter)))) {
+    __Vdly__blink_led__DOT__counter = vlSelfRef.blink_led__DOT__counter;
+    if (vlSelfRef.reset) {
+        __Vdly__blink_led__DOT__counter = 0U;
+        __Vdly__led = 0U;
+    } else if (VL_UNLIKELY((vlSelfRef.blink_led__DOT__s))) {
+        __Vdly__led = (1U & ((IData)(vlSelfRef.blink_led__DOT__s)
+                              ? (~ (IData)(vlSelfRef.led))
+                              : (IData)(vlSelfRef.led)));
         VL_WRITEF_NX("LED: [%b]\n",0,1,(1U & (~ (IData)(vlSelfRef.led))));
+        __Vdly__blink_led__DOT__counter = 0U;
+    } else {
+        __Vdly__blink_led__DOT__counter = ((IData)(1U) 
+                                           + vlSelfRef.blink_led__DOT__counter);
     }
-    vlSelfRef.blink_led__DOT__counter = ((IData)(vlSelfRef.blink_led__DOT__s)
-                                          ? 0U : ((IData)(1U) 
-                                                  + vlSelfRef.blink_led__DOT__counter));
     vlSelfRef.led = __Vdly__led;
+    vlSelfRef.blink_led__DOT__counter = __Vdly__blink_led__DOT__counter;
     vlSelfRef.blink_led__DOT__s = (0x00989680U <= vlSelfRef.blink_led__DOT__counter);
 }
 
@@ -57,23 +69,32 @@ void Vblink_led___024root___eval_nba(Vblink_led___024root* vlSelf) {
     Vblink_led__Syms* const __restrict vlSymsp VL_ATTR_UNUSED = vlSelf->vlSymsp;
     auto& vlSelfRef = std::ref(*vlSelf).get();
     // Locals
+    IData/*31:0*/ __Vinline__nba_sequent__TOP__0___Vdly__blink_led__DOT__counter;
+    __Vinline__nba_sequent__TOP__0___Vdly__blink_led__DOT__counter = 0;
     CData/*0:0*/ __Vinline__nba_sequent__TOP__0___Vdly__led;
     __Vinline__nba_sequent__TOP__0___Vdly__led = 0;
     // Body
-    if ((1ULL & vlSelfRef.__VnbaTriggered[0U])) {
+    if ((3ULL & vlSelfRef.__VnbaTriggered[0U])) {
         __Vinline__nba_sequent__TOP__0___Vdly__led 
             = vlSelfRef.led;
-        __Vinline__nba_sequent__TOP__0___Vdly__led 
-            = (1U & ((0x00989680U <= vlSelfRef.blink_led__DOT__counter)
-                      ? (~ (IData)(vlSelfRef.led)) : (IData)(vlSelfRef.led)));
-        if (VL_UNLIKELY(((0x00989680U <= vlSelfRef.blink_led__DOT__counter)))) {
+        __Vinline__nba_sequent__TOP__0___Vdly__blink_led__DOT__counter 
+            = vlSelfRef.blink_led__DOT__counter;
+        if (vlSelfRef.reset) {
+            __Vinline__nba_sequent__TOP__0___Vdly__blink_led__DOT__counter = 0U;
+            __Vinline__nba_sequent__TOP__0___Vdly__led = 0U;
+        } else if (VL_UNLIKELY((vlSelfRef.blink_led__DOT__s))) {
+            __Vinline__nba_sequent__TOP__0___Vdly__led 
+                = (1U & ((IData)(vlSelfRef.blink_led__DOT__s)
+                          ? (~ (IData)(vlSelfRef.led))
+                          : (IData)(vlSelfRef.led)));
             VL_WRITEF_NX("LED: [%b]\n",0,1,(1U & (~ (IData)(vlSelfRef.led))));
+            __Vinline__nba_sequent__TOP__0___Vdly__blink_led__DOT__counter = 0U;
+        } else {
+            __Vinline__nba_sequent__TOP__0___Vdly__blink_led__DOT__counter 
+                = ((IData)(1U) + vlSelfRef.blink_led__DOT__counter);
         }
-        vlSelfRef.blink_led__DOT__counter = ((IData)(vlSelfRef.blink_led__DOT__s)
-                                              ? 0U : 
-                                             ((IData)(1U) 
-                                              + vlSelfRef.blink_led__DOT__counter));
         vlSelfRef.led = __Vinline__nba_sequent__TOP__0___Vdly__led;
+        vlSelfRef.blink_led__DOT__counter = __Vinline__nba_sequent__TOP__0___Vdly__blink_led__DOT__counter;
         vlSelfRef.blink_led__DOT__s = (0x00989680U 
                                        <= vlSelfRef.blink_led__DOT__counter);
     }
@@ -150,7 +171,7 @@ void Vblink_led___024root___eval(Vblink_led___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vblink_led___024root___dump_triggers__act(vlSelfRef.__VnbaTriggered, "nba"s);
 #endif
-            VL_FATAL_MT("blink_led.sv", 1, "", "DIDNOTCONVERGE: NBA region did not converge after '--converge-limit' of 100 tries");
+            VL_FATAL_MT("blink_led.v", 1, "", "DIDNOTCONVERGE: NBA region did not converge after '--converge-limit' of 100 tries");
         }
         __VnbaIterCount = ((IData)(1U) + __VnbaIterCount);
         vlSelfRef.__VactIterCount = 0U;
@@ -159,7 +180,7 @@ void Vblink_led___024root___eval(Vblink_led___024root* vlSelf) {
 #ifdef VL_DEBUG
                 Vblink_led___024root___dump_triggers__act(vlSelfRef.__VactTriggered, "act"s);
 #endif
-                VL_FATAL_MT("blink_led.sv", 1, "", "DIDNOTCONVERGE: Active region did not converge after '--converge-limit' of 100 tries");
+                VL_FATAL_MT("blink_led.v", 1, "", "DIDNOTCONVERGE: Active region did not converge after '--converge-limit' of 100 tries");
             }
             vlSelfRef.__VactIterCount = ((IData)(1U) 
                                          + vlSelfRef.__VactIterCount);
@@ -177,6 +198,9 @@ void Vblink_led___024root___eval_debug_assertions(Vblink_led___024root* vlSelf) 
     // Body
     if (VL_UNLIKELY(((vlSelfRef.clk & 0xfeU)))) {
         Verilated::overWidthError("clk");
+    }
+    if (VL_UNLIKELY(((vlSelfRef.reset & 0xfeU)))) {
+        Verilated::overWidthError("reset");
     }
 }
 #endif  // VL_DEBUG

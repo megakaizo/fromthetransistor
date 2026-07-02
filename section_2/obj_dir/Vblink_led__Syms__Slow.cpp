@@ -11,7 +11,7 @@ Vblink_led__Syms::Vblink_led__Syms(VerilatedContext* contextp, const char* namep
     , TOP{this, namep}
 {
     // Check resources
-    Verilated::stackCheck(190);
+    Verilated::stackCheck(198);
     // Setup sub module instances
     // Configure time unit / time precision
     _vm_contextp__->timeunit(-12);

@@ -10,6 +10,7 @@ Vblink_led::Vblink_led(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vblink_led__Syms(contextp(), _vcname__, this)}
     , clk{vlSymsp->TOP.clk}
+    , reset{vlSymsp->TOP.reset}
     , led{vlSymsp->TOP.led}
     , rootp{&(vlSymsp->TOP)}
 {

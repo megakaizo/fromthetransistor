@@ -15,11 +15,13 @@ class alignas(VL_CACHE_LINE_BYTES) Vblink_led___024root final {
 
     // DESIGN SPECIFIC STATE
     VL_IN8(clk,0,0);
+    VL_IN8(reset,0,0);
     VL_OUT8(led,0,0);
     CData/*0:0*/ blink_led__DOT__s;
     CData/*0:0*/ __VstlFirstIteration;
     CData/*0:0*/ __VstlPhaseResult;
     CData/*0:0*/ __Vtrigprevexpr___TOP__clk__0;
+    CData/*0:0*/ __Vtrigprevexpr___TOP__reset__0;
     CData/*0:0*/ __VactPhaseResult;
     CData/*0:0*/ __VnbaPhaseResult;
     IData/*31:0*/ blink_led__DOT__counter;
