@@ -2,6 +2,7 @@ module tx_uart(
  input wire baud_tick,
  input wire clk,
  input wire reset,
+ input wire tx_start,
  input wire [7:0] tx_data,
  output reg tx_busy,
  output reg tx
@@ -9,7 +10,7 @@ module tx_uart(
 
 reg [9:0] tx_reg;
 
-reg [3:0] counter = 0;
+reg [3:0] counter;
 
 always @(posedge clk) begin
  if (reset) begin
@@ -18,7 +19,7 @@ always @(posedge clk) begin
   counter <= 0;
   tx <= 1;
  end else begin
-  if (!tx_busy && baud_tick) begin
+  if (!tx_busy && tx_start) begin
    tx_busy <= 1;
    tx_reg <= {1'b1, tx_data, 1'b0};
    counter <= 10;

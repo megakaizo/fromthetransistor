@@ -1,6 +1,7 @@
 module baud_rate(
  input wire clk,
  input wire reset,
+ input wire reset_rx,
  output reg baud_tick
 );
 reg [31:0] counter;
@@ -8,7 +9,7 @@ reg [31:0] counter;
 parameter integer BAUD_BEAT = 434;
 
 always @(posedge clk or posedge reset) begin
- if (reset) begin
+ if (reset || reset_rx) begin
   counter <= 0;
   baud_tick <= 0;
  end else begin
