@@ -30,7 +30,7 @@ rx_uart my_rx_uart (
  .reset(reset),
  .rx (i_rx),
  .baud_tick (baud_tick),
- .rx (rx_byte),
+ .rx_byte (rx_byte),
  .rx_busy (rx_busy),
  .reset_baud (reset_baud_rx)
 );

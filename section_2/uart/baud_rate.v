@@ -8,9 +8,12 @@ reg [31:0] counter;
 
 parameter integer BAUD_BEAT = 434;
 
-always @(posedge clk or posedge reset) begin
- if (reset || reset_rx) begin
+always @(posedge clk) begin
+ if (reset) begin
   counter <= 0;
+  baud_tick <= 0;
+ end else if (reset_rx) begin
+  counter <= BAUD_BEAT / 2;
   baud_tick <= 0;
  end else begin
   if (counter >= (BAUD_BEAT - 1)) begin

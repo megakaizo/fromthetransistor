@@ -8,7 +8,7 @@ module tx_uart(
  output reg tx
 );
 
-reg [9:0] tx_reg;
+reg [7:0] tx_reg;
 
 reg [3:0] counter;
 
@@ -21,14 +21,17 @@ always @(posedge clk) begin
  end else begin
   if (!tx_busy && tx_start) begin
    tx_busy <= 1;
-   tx_reg <= {1'b1, tx_data, 1'b0};
-   counter <= 10;
+   tx_reg <= tx_data;
+   counter <= 9;
+   tx <= 0;
   end else if (tx_busy && baud_tick) begin
    tx <= tx_reg[0];
-   tx_reg <= {0, tx_reg[9:1]};
+   tx_reg <= {1'b1, tx_reg[7:1]};
    counter <= counter - 1;
+   //$display("tx: %b", tx);
    if (counter == 1) begin
     tx_busy <= 0;
+    tx <= 1;
    end
   end
  end
